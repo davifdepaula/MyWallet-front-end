@@ -5,6 +5,8 @@ const GlobalStyle = createGlobalStyle`
     body{
         box-sizing: border-box;
         display: flex;
+        width: 100vw;
+        height: 100vh;
         background: #8C11BE;        
     }
 

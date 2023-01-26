@@ -4,8 +4,7 @@ const UserContext = createContext()
 function UserProvider({ children }){
     const [userName, setUserName] = useState("")
     const [token, setToken] = useState()
-    const [cashIn, setCashIn] = useState([])
-    const [cashOut, setCashOut] = useState([])
+    const [checkingAccount, setcheckingAccount] = useState([])
     const [balance, setBalance] = useState(0)
 
     const config = {
@@ -18,8 +17,8 @@ function UserProvider({ children }){
         <UserContext.Provider 
         value = {{userName, setUserName,
             token, setToken, 
-            cashIn, setCashIn,
-            cashOut, setCashOut, balance, setBalance, config}}>
+            checkingAccount, setcheckingAccount,
+            balance, setBalance, config}}>
             {children}
         </UserContext.Provider>
 

@@ -23,6 +23,7 @@ const Container = styled.div`
     .buttons{
         display: flex;
         justify-content: space-between;
+        margin-bottom: 10px;
 
         button{
             align-items: flex-start;
@@ -100,10 +101,6 @@ const Box = styled.div`
             color: #C70000;
         }
 
-        .deposit{
-            color: #03AC00;
-        }
-
     }
 
     .controlPosition{
@@ -120,7 +117,12 @@ const Box = styled.div`
     }
 `
 
+const InOut = styled.div`
+    color: ${props => props.color};
+`
+
 export {
     Container,
-    Box
+    Box,
+    InOut
 }

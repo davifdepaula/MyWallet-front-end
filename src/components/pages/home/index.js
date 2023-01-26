@@ -1,13 +1,13 @@
 import axios from 'axios'
 import React, { useContext, useEffect } from 'react'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { UserContext } from '../../../context/authContext'
-import { Container, Box } from './style'
+import { Container, Box, InOut } from './style.js'
 
 function Home() {
     const {token, setToken, userName, 
-        setUserName, cashIn, setCashIn, 
-        cashOut, setCashOut, balance, setBalance, config} = useContext(UserContext)
+        setUserName, checkingAccount, setcheckingAccount, 
+        balance, setBalance, config} = useContext(UserContext)
     const navigate = useNavigate()
 
     useEffect(()=>{
@@ -21,15 +21,14 @@ function Home() {
         axios.get(`${url}home`, config)
             .then(response => {
                 setUserName(response.data.name)
-                setCashIn(response.data.cashIn)
-                setCashOut(response.data.cashOut)
-                setBalance(response.data.saldo)
+                setcheckingAccount(response.data.checkingAccount)
+                setBalance(response.data.balance)
             })
             .catch(error => console.log(error))
     }, [])
 
     function boxContainer(){
-        if(cashIn.length === 0  && cashOut.length === 0 ) {
+        if(checkingAccount.length === 0 ) {
             return (
                 <div className='noRegister'>
                     Não há registros de entrada ou saída
@@ -38,32 +37,24 @@ function Home() {
         }
         return(
             <div>
-                {cashIn.map(deposit => {
+                {checkingAccount.map(transfer => {
                     return(
                         <div className='transitions'>
                         <div>
-                        <span className='date'>{deposit.date}</span>
-                        <span className='description'>{deposit.description}</span>
+                        <span className='date'>{transfer.date}</span>
+                        <span className='description'>{transfer.description}</span>
                         </div>
-                        <span className='deposit'>{deposit.value}</span>
-                        </div>)                    
-                })}
-
-                {cashOut.map(deposit => {
-                    return(
-                        <div className='transitions'>
-                        <div>
-                        <span className='date'>{deposit.date}</span>
-                        <span className='description'>{deposit.description}</span>
-                        </div>
-                        <span className='withdraw'>{deposit.value}</span>
+                        <InOut
+                            color = {transfer.type === 'deposit'? '#03AC00':'#C70000' }>
+                            {transfer.value}
+                        </InOut>
                         </div>)                    
                 })}
 
                 <div className='controlPosition'>
                 <div className='balance'>
                     <span>saldo</span> 
-                    <span>{balance}</span>
+                    <span>{balance.toFixed(2)}</span>
                 </div>
                 </div>
             </div>
